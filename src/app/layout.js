@@ -9,15 +9,14 @@ export const metadata = {
   description: "TodoApp | Next Js & Supabase",
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthButton />
-        <main className="flex justify-center items-center min-h-[95vh] w-100 bg-slate-50 relative ">
+        <main className="flex justify-center items-center min-h-[100vh] w-100 bg-slate-50 relative ">
           {children}
         </main>
       </body>
     </html>
   )
-} 
+}
