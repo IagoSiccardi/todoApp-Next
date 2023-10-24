@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google"
 import "./globals.css"
-import AuthButton from "@/components/AuthButton"
+import Header from "@/components/Header"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -13,7 +13,8 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex justify-center items-center min-h-[100vh] w-100 bg-slate-50 relative ">
+        <Header/>
+        <main className="grid min-w-screen place-content-center min-h-[92vh] bg-slate-50 relative ">
           {children}
         </main>
       </body>

@@ -1,8 +1,8 @@
-import AuthButton from "@/components/AuthButton"
 import Task from "@/components/Task"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 export const metadata = {
   title: "TodoApp | Home",
@@ -15,6 +15,10 @@ const page = async ({ searchParams }) => {
   const usuario = await supabase.auth.getSession()
 
   const userId = usuario?.data?.session?.user.id
+
+  if (usuario?.data?.session === null){
+    redirect('/login')
+  }
 
   const fetchData = async (pagina) => {
     const limit = 6
@@ -34,7 +38,6 @@ const page = async ({ searchParams }) => {
 
   return (
     <>
-      {userId? (
         <section className="transition p-10 justify-center items-center flex flex-col w-100 w-[500px] bg-white  rounded-xl relative ">
           <h2 className="mb-4 pb-1 border-b-2 text-left w-full text-2xl font-bold text-blue-800">
             Tasks
@@ -81,9 +84,7 @@ const page = async ({ searchParams }) => {
             </Link>
           </div>
         </section>
-      ) : (
-        <AuthButton />
-      )}
+      
     </>
   )
 }
