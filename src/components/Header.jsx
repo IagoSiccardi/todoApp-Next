@@ -46,7 +46,7 @@ const Header = () => {
             className="border-2 font-semibold border-blue-300 p-2 rounded-3xl transition hover:scale-105"
             onClick={handleSignOut}
           >
-            Sing out
+            Sign out
           </button>
         )}
       </section>

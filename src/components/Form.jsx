@@ -9,7 +9,8 @@ const Form = () => {
   const router = useRouter()
   const pathName = usePathname()
   const params = useParams()
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(" ")
+  const [placeholder, setPlaceholder] = useState(" ")
   const [errors, setErrors] = useState()
 
   const getUser = async () => {
@@ -25,7 +26,7 @@ const Form = () => {
 
   const getTaskById = async () => {
     const { data } = await supabase.from("todos").select().eq("id", params.id)
-    setInputValue(data[0].name)
+    setPlaceholder(data[0]?.name)
   }
 
   if (pathName.slice(-4) === "edit") {
@@ -33,10 +34,14 @@ const Form = () => {
   }
 
   const handleEdit = async () => {
+
+    const userId = await getUser()
+
     await supabase
-      .from("todos")
+      .from('todos')
       .update({ name: inputValue })
-      .eq("id", params.id)
+      .eq("user-id", userId)  // Verifica que el user-id sea igual al ID del usuario autenticado
+      .eq("id", params.id) 
 
     router.push("/task/" + params.id)
     router.refresh()
@@ -45,7 +50,7 @@ const Form = () => {
   const handleAdd = async () => {
     const userId = await getUser()
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("todos")
       .insert([{ name: inputValue, done: false, "user-id": userId }])
       .select()
@@ -58,7 +63,6 @@ const Form = () => {
       throw error
     }
 
-    console.log(data)
   }
 
   const handleChange = (e) => {
@@ -100,7 +104,7 @@ const Form = () => {
         className="text-lg rounded-lg p-2 w-100 outline-none mb-5"
         onChange={handleChange}
         placeholder={
-          pathName.slice(-4) === "edit" ? inputValue : "Write your task"
+          pathName.slice(-4) === "edit" ? placeholder : "Write your task"
         }
       />
       <button className="w-full rounded-lg bg-blue-800 text-white flex items-center justify-center p-2 cursor-pointer font-semibold transition hover:scale-105">
