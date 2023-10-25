@@ -24,7 +24,7 @@ const AuthButton = () => {
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${process.env.SITE_URL}/auth/callback`,
+        redirectTo: `https://todo-app-next-xi.vercel.app/auth/callback`,
       },
     })
     router.reload()
