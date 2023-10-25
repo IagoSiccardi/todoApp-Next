@@ -9,7 +9,10 @@ export const metadata = {
   description: "TodoApp | Next Js & Supabase",
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={inter.className}>
